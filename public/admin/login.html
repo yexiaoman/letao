@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="css/commetn.css">
+    <title>登录页面</title>
+</head>
+<body class="body-bd">
+    <div class="container">
+        <div class="col-md-4 col-md-offset-4">
+            <!-- 引入面板 -->
+            <div class="panel panel-primary mt-150">
+               <div class="panel-heading">
+                   <h4 class="text-center fo-title">后台管理系统</h4>
+               </div>
+               <div class="panel-body">
+                 <!-- 插入表格 -->
+                        <form class="form-horizontal">
+                            <!-- 用户名 -->
+                            <div class="form-group">
+                                <label for="username" class="col-sm-3 control-label">用户名:</label>
+                                <div class="col-sm-9">
+                                <input type="email" autocomplete="off" class="form-control" id="username" placeholder="请输入用户名">
+                            </div>
+                            </div>
+                            <!-- 密码 -->
+                            <div class="form-group">
+                                <label for="password" class="col-sm-3 control-label">密码:</label>
+                                <div class="col-sm-9">
+                                <input type="password" class="form-control" id="password" placeholder="请输入密码">
+                            </div>
+                            </div>
+                            <!-- 登录 -->
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-6">
+                                    <button type="reset" class="btn btn-default">重置</button>
+                                    <button type="submit" class="btn btn-primary pull-right">登录</button>
+                                </div>
+                            </div>
+                      </form>
+               </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="lib/jquery/jquery.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.js"></script>
+</body>
+</html>
