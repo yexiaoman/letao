@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="lib/bootstrap-validator/css/bootstrapValidator.css">
     <link rel="stylesheet" href="css/commetn.css">
     <title>登录页面</title>
 </head>
@@ -18,19 +19,19 @@
                </div>
                <div class="panel-body">
                  <!-- 插入表格 -->
-                        <form class="form-horizontal">
+                        <form class="form-horizontal" id="form">
                             <!-- 用户名 -->
                             <div class="form-group">
                                 <label for="username" class="col-sm-3 control-label">用户名:</label>
                                 <div class="col-sm-9">
-                                <input type="email" autocomplete="off" class="form-control" id="username" placeholder="请输入用户名">
+                                <input type="text" autocomplete="off" class="form-control" id="username" placeholder="请输入用户名" name="username">
                             </div>
                             </div>
                             <!-- 密码 -->
                             <div class="form-group">
                                 <label for="password" class="col-sm-3 control-label">密码:</label>
                                 <div class="col-sm-9">
-                                <input type="password" class="form-control" id="password" placeholder="请输入密码">
+                                <input type="password" class="form-control" id="password" placeholder="请输入密码" name="password">
                             </div>
                             </div>
                             <!-- 登录 -->
@@ -48,5 +49,7 @@
     
     <script src="lib/jquery/jquery.js"></script>
     <script src="lib/bootstrap/js/bootstrap.js"></script>
+    <script src="lib/bootstrap-validator/js/bootstrapValidator.js"></script>
+    <script src="js/login.js"></script>
 </body>
 </html>
