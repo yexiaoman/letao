@@ -41,6 +41,7 @@ $(function(){
             }
         }
     })
+    // 点击提交发送请求
     $form.on("success.form.bv",function(e){
         // 阻止浏览器默认跳转
         e.preventDefault();
@@ -60,5 +61,11 @@ $(function(){
                 }
             }
         })
+    })
+
+    // 点击重置按钮,初始化表单数据
+    $('[type=reset]').on( 'click', function(){
+        // 重置表单,隐藏错误提示
+        $form.data('bootstrapValidator').resetForm();
     })
 })
