@@ -62,7 +62,7 @@ function pageRender(res){
         numberOfPages:5,
         bootstrapMajorVersion: 3,
         onPageClicked: function(event,originalEvent,type,p){
-            page = page;
+            page = p;
             render(p);
         }
     })
