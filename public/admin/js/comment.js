@@ -52,3 +52,18 @@ $(function(){
        },500)
     })
 })
+
+
+// 分页渲染封装
+function pageRender(res){
+    $('#paginator').bootstrapPaginator( {
+        currentPage: res.page,
+        totalPages: Math.ceil(res.total / res.size),
+        numberOfPages:5,
+        bootstrapMajorVersion: 3,
+        onPageClicked: function(event,originalEvent,type,p){
+            page = page;
+            render(p);
+        }
+    })
+}
