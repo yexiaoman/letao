@@ -76,6 +76,6 @@ $('#submit').on('input', function(){
         reads.onload=function (e) {
             document.querySelector('#bigImg img').src=this.result;
             document.querySelector('#imgLOgo').value = document.querySelector('#bigImg img').src;
-            $('#imgLOgo').val(this.result);
+            // $('#imgLOgo').val(this.result);
         };
 })
