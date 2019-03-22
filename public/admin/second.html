@@ -75,6 +75,8 @@
                         <tr>
                             <th width="20%">序号</th>
                             <th>一级分类名</th>
+                            <th>二级分类名</th>
+                            <th>二级分类LOGO</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -119,11 +121,38 @@
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h4 class="modal-title">添加分类</h4>
             </div>
-            <form id="form">
+            <form id="form" enctype="multipart/form-data">
             <div class="modal-body">
-                  
+                <!-- 按钮下拉列表 -->
+                <!-- Small button group -->
+                <div class="form-group">
+                    <div class="btn-group">
+                        <button class="btn btn-default btn-sm dropdown-toggle " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="modalText">请选择一级分类</span> <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                        <!-- 模板 -->
+                        </ul>
+                        <input type="hidden" name="droText" id="droText">
+                    </div>
+                </div>
+
+                  <!-- 类名输入框 -->
                      <div class="form-group">
-                      <input type="text" class="form-control text_mo" autocomplete="off" name="categoryName" placeholder="请输入分类名称">
+                      <input type="text" class="form-control text_mo" autocomplete="off" name="categoryName" placeholder="请输入二级分类名称">
+                    </div>
+
+                    <!-- 选择图片 -->
+                    <div class="form-group">
+                        <label for="submit" class="btn btn-default img_btn">上传图片</label>
+                        <input type="file" name="file" id="submit" style="display:none">
+                    </div>
+
+                    <!-- 大图片 -->
+                    <div class="form-group" id="bigImg">
+                        <img src="images/none.png" alt="" width="100">
+                        <!-- 图片地址 -->
+                        <input type="hidden" name="imgLogo" id="imgLOgo">
                     </div>
                  
             </div>
@@ -142,6 +171,7 @@
       <script src="lib/bootstrap-validator/js/bootstrapValidator.js"></script>
       <script src="lib/bootstrap-paginator/bootstrap-paginator.js"></script>
       <script src="js/comment.js"></script>
+      <script src="js/second.js"></script>
 
       <!-- 准备模板 -->
         <script type="text/html" id="tmp">
@@ -149,7 +179,16 @@
                     <tr>
                         <td>{{(page - 1) * size + i +1}}</td>
                         <td>{{v.categoryName}}</td>
+                        <td>{{v.brandName}}</td>
+                        <td><img src="{{v.brandLogo}}" height="50" alt=""></td>
                     </tr>
+            {{/each}}
+        </script>
+
+        <!-- 下拉列表模板 -->
+        <script type="text/html" id="tmp2">
+            {{each rows v i}}
+                <li><a href="javascript:;">  {{v.categoryName}}</a></li>
             {{/each}}
         </script>
 </body>
