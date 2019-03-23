@@ -21,26 +21,7 @@ function render(page){
 
 // 给添加分类注册`点击事件,点击时弹出1模态框
 $('.addBtn').on('click', function(){
-    $('#modal2').modal('show');
-    // 表单验证
-  var icon = {
-    valid: 'glyphicon glyphicon-ok',
-    invalid: 'glyphicon glyphicon-remove',
-    validating: 'glyphicon glyphicon-refresh'
-};
-$("#form").bootstrapValidator({
-    feedbackIcons: icon,//加载图标
-    fields:{
-        categoryName:{
-            validators:{
-                notEmpty: {//检测非空,radio也可用
-                    message: '文本框必须输入'
-                }
-            }
-        }
-
-    }
-})
+    $('#addModal').modal('show');
 
 })
 
@@ -63,19 +44,76 @@ $('.dropdown-menu').on('click', 'li', function(){
     // 点击每一个li获取其自身文本,更改按钮文本值
    var txt = $(this).children().text();
 //    更改按钮文本值
-    $('.modalText').text(txt);
-    $('#droText').val(txt);
+    $('#dropdownText').text(txt);
+    $('[name=categoryId]').val($(this).data('id'));
+
+    // 更改校验结果
+    $('#form').data('bootstrapValidator').updateStatus('categoryId', 'VALID')
 })
   
-// 给上传图片注册点击事件,实现图片预览
-$('#submit').on('input', function(){
-    var reads= new FileReader();
-    console.dir($(this).context.files[0])
-    f=$(this).context.files[0];
-    reads.readAsDataURL(f);
-        reads.onload=function (e) {
-            document.querySelector('#bigImg img').src=this.result;
-            document.querySelector('#imgLOgo').value = document.querySelector('#bigImg img').src;
-            // $('#imgLOgo').val(this.result);
-        };
+    $('#fileupload').fileupload({
+        dataType: 'json',
+        done:function(e,data){
+            console.log(data)
+            var picAddr = data.result.picAddr;
+            // 设置图片地址
+            $('#imgBox img').attr("src", picAddr);
+            // 将图片地址存在隐藏域中
+            $('[name="brandLogo"]').val( picAddr );
+            $('#form').data('bootstrapValidator').updateStatus('brandLogo', 'VALID')
+    }
+})
+
+//   表单验证
+  var icon = {
+    valid: 'glyphicon glyphicon-ok',
+    invalid: 'glyphicon glyphicon-remove',
+    validating: 'glyphicon glyphicon-refresh'
+};
+$("#form").bootstrapValidator({
+    excluded: [],
+    feedbackIcons: icon,//加载图标
+    fields:{
+        brandName:{
+            validators:{
+                notEmpty: {//检测非空,radio也可用
+                    message: '请输入二级分类'
+                }
+            }
+        },
+        categoryId:{
+            validators:{
+                notEmpty: {//检测非空,radio也可用
+                    message: '请选择一级分类'
+                }
+            }
+        },
+        brandLogo:{
+            validators:{
+                notEmpty: {//检测非空,radio也可用
+                    message: '请选择图片'
+                }
+            }
+        }
+    }
+})
+
+// 表单校验成功触发
+$('#form').on('success.form.bv', function(e){
+    // 阻止浏览器默认事件
+    e.preventDefault();
+    // 发送Ajax
+    $.ajax({
+        type: 'post',
+        url: '/category/addSecondCategory',
+        data:$('#form').serialize(),
+        success: function(res){
+            if( res.success){
+                // 关闭模态框
+                $('#addModal').modal('hide')
+                render(page);
+                pageRender(res);
+            }
+        }
+    })
 })

@@ -113,63 +113,64 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <!--添加分类 模态框 -->
-    <div class="modal fade" tabindex="-1" id="modal2" role="dialog">
-        <div class="modal-dialog modal-sm" >
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">添加分类</h4>
+   <!-- 添加分类的模态框 -->
+<div class="modal fade" id="addModal">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+          <h4 class="modal-title">添加分类</h4>
+        </div>
+        <div class="modal-body">
+          <form id="form">
+            <div class="form-group">
+              <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                  <span id="dropdownText">请选择一级分类</span>
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <!-- 刨个坑 -->
+                </ul>
+              </div>
+    
+              <input type="hidden" name="categoryId">
             </div>
-            <form id="form" enctype="multipart/form-data">
-            <div class="modal-body">
-                <!-- 按钮下拉列表 -->
-                <!-- Small button group -->
-                <div class="form-group">
-                    <div class="btn-group">
-                        <button class="btn btn-default btn-sm dropdown-toggle " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="modalText">请选择一级分类</span> <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                        <!-- 模板 -->
-                        </ul>
-                        <input type="hidden" name="droText" id="droText">
-                    </div>
-                </div>
-
-                  <!-- 类名输入框 -->
-                     <div class="form-group">
-                      <input type="text" class="form-control text_mo" autocomplete="off" name="categoryName" placeholder="请输入二级分类名称">
-                    </div>
-
-                    <!-- 选择图片 -->
-                    <div class="form-group">
-                        <label for="submit" class="btn btn-default img_btn">上传图片</label>
-                        <input type="file" name="file" id="submit" style="display:none">
-                    </div>
-
-                    <!-- 大图片 -->
-                    <div class="form-group" id="bigImg">
-                        <img src="images/none.png" alt="" width="100">
-                        <!-- 图片地址 -->
-                        <input type="hidden" name="imgLogo" id="imgLOgo">
-                    </div>
-                 
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="请输入二级分类" name="brandName">
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-              <button type="submit" class="btn btn-primary ascertain">确定</button>
+            <div class="form-group">
+              <label class="btn btn-default" for="fileupload">上传图片</label>
+              <!-- 注意:
+                      1. 指定name用于让后台获取图片, 所以不能乱写
+                      2. 指定data-url, 指定接口地址
+              -->
+              <input type="file" name="pic1" data-url="/category/addSecondCategoryPic" id="fileupload" style="display: none;">
             </div>
-        </form>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+            <div class="form-group" id="imgBox">
+              <img src="images/none.png" width="100">
+              <!-- 图片地址 -->
+              <input type="hidden" name="brandLogo">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <!-- html5 新增 form 属性, 可以让表单外的按钮, 与表单关联起来(就相当于是写在了表单里面)-->
+          <button type="submit" class="btn btn-primary" form="form">添加</button>
+        </div>
+      </div>
+    </div>
+  </div>
       <script src="lib/jquery/jquery.js"></script>
       <script src="lib/bootstrap/js/bootstrap.js"></script>
       <script src="lib/nprogress/nprogress.js"></script>
       <script src="lib/artTemplate/template-web.js"></script>
       <script src="lib/bootstrap-validator/js/bootstrapValidator.js"></script>
       <script src="lib/bootstrap-paginator/bootstrap-paginator.js"></script>
+      <script src="lib/jquery-fileupload/jquery.ui.widget.js"></script>
+      <script src="lib/jquery-fileupload/jquery.iframe-transport.js"></script>
+      <script src="lib/jquery-fileupload/jquery.fileupload.js"></script>
       <script src="js/comment.js"></script>
       <script src="js/second.js"></script>
 
@@ -188,7 +189,7 @@
         <!-- 下拉列表模板 -->
         <script type="text/html" id="tmp2">
             {{each rows v i}}
-                <li><a href="javascript:;">  {{v.categoryName}}</a></li>
+                <li data-id="{{v.id}}"><a href="javascript:;" >  {{v.categoryName}}</a></li>
             {{/each}}
         </script>
 </body>
