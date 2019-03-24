@@ -40,14 +40,15 @@ $.ajax({
 
 // 給下拉按钮注册点击事件,修改其文本值
 $('.dropdown-menu').on('click','a', function(){
+    console.log($(this).data('id'))
     // 給隐藏域赋值
-    $('[name=proName]').val($(this).text());
+    $('[name=brandId]').val($(this).parent().data('id'));
     // 給按钮文本修改内容
     $('.drop-text').text($(this).text());
     // 恢复表单校验
-    $('#form').data('bootstrapValidator').updateStatus('proName','VALID');
+    $('#form').data('bootstrapValidator').updateStatus('brandId','VALID');
 })
-
+var imgUrl;
 // 文件上传成功后触发
 $('#file').fileupload({
     type: 'json',
@@ -57,7 +58,7 @@ $('#file').fileupload({
         // console.log(tmp);
         
         // 把图片展示到页面上
-        arr.unshift(tmp);
+        arr.unshift(data.result);
         // console.log(arr);
         
         $('#imgBox').prepend('<img src="'+ tmp +'" alt="" width="100" style="margin:0 5px">');
@@ -65,6 +66,7 @@ $('#file').fileupload({
             $('#imgBox').children().eq(3).remove()
             // $('#form').data('bootstrapValidator').updateStatus('picStatus','VALID');
         }
+        imgUrl = JSON.stringify(arr);
         if( arr.length > 3){
             arr.pop();
         } 
@@ -76,9 +78,13 @@ $('#file').fileupload({
             // console.log(1);
             
         }
+
+        // 恢复默认样式
+        $('.drop-text').text('请选择二级分类');
     }
 })
 
+// 表单校验
 $('#form').bootstrapValidator({
     // 取消隐藏域不进行校验
     excluded: [],
@@ -93,14 +99,14 @@ $('#form').bootstrapValidator({
         proName:{
             validators:{
                 notEmpty:{
-                    message: '请选择二级分类'
+                    message: '请输入商品名称'
                 }
             }
         },
         brandId:{
             validators:{
                 notEmpty:{
-                    message: '请输入商品名称'
+                    message: '请选择二级分类'
                 }
             }
         },
@@ -157,4 +163,26 @@ $('#form').bootstrapValidator({
         
         
     }
+})
+
+// 表单校验成功后,发送ajax请求
+$('#form').on('success.form.bv', function(e){
+    e.preventDefault();
+    var res = $('form').serialize();
+    res += '&picArr=' + imgUrl;
+    console.log(res);
+    $('#imgBox').children().remove();
+    // // 发送ajax请求
+    $.ajax({
+        type: 'post',
+        url: '/product/addProduct',
+        data: res,
+        success: function(res){
+            // 成功后关闭模态框
+            $('#form').data('bootstrapValidator').resetForm(true);
+            $('#modal2').modal('hide');
+            render(page);
+            pageRender(res);
+        }
+    })
 })
